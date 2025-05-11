@@ -96,4 +96,3 @@ To set up this project locally, follow these steps:
 ---
 
 Let me know if you'd like assistance generating a `requirements.txt` file or any other documentation for your project.
-::contentReference[oaicite:4]{index=4}
