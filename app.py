@@ -7,33 +7,30 @@ from tensorflow.keras.preprocessing.sequence import pad_sequences
 
 # ====== Load Models, Encoders, Tokenizers ======
 @st.cache_resource
-
 def load_model(path):
     try:
         return joblib.load(path)
     except Exception as e:
-        st.error(f"Error loading model from {path}: {e}")
+        st.error(f"❌ Error loading model from {path}: {e}")
         return None
 
 @st.cache_resource
-
 def load_encoder(path):
     try:
         return joblib.load(path)
     except Exception as e:
-        st.error(f"Error loading encoder from {path}: {e}")
+        st.error(f"❌ Error loading encoder from {path}: {e}")
         return None
 
 @st.cache_resource
-
 def load_tokenizer(path):
     try:
         return joblib.load(path)
     except Exception as e:
-        st.error(f"Error loading tokenizer from {path}: {e}")
+        st.error(f"❌ Error loading tokenizer from {path}: {e}")
         return None
 
-# Paths for models and encoders
+# ====== Paths ======
 model_paths = {
     '1a': 'machine_learning_models/1-log_reg_model.pkl',
     '1b': 'machine_learning_models/1-mlp_model.pkl',
@@ -94,7 +91,7 @@ Next question:
         "Content-Type": "application/json"
     }
     payload = {
-        "model": "openai/gpt-3.5-turbo-0125",  # or another working model
+        "model": "openai/gpt-3.5-turbo-0125",
         "messages": [{"role": "user", "content": prompt}]
     }
 
@@ -106,9 +103,11 @@ Next question:
     except Exception as e:
         return f"⚠️ Error getting question: {str(e)}\n{response.text if response else ''}"
 
-
 # ====== Streamlit UI ======
-st.title("🧠 AI Healthcare Assistant")
+st.set_page_config(page_title="AI Healthcare Assistant", page_icon="🧠", layout="centered")
+st.markdown("<h1 style='text-align: center; color: #0e5ec7;'>🧠 AI Healthcare Assistant</h1>", unsafe_allow_html=True)
+st.markdown("<h4 style='text-align: center; color: #444;'>Answer a few questions and get a prediction of your condition.</h4>", unsafe_allow_html=True)
+st.markdown("---")
 
 if "step" not in st.session_state:
     st.session_state.step = 0
@@ -117,9 +116,10 @@ if "step" not in st.session_state:
     st.session_state.max_qs = 0
 
 if st.session_state.step == 0:
-    st.session_state.max_qs = 6  # Fixed to 6 questions for better UX
-    symptoms = st.text_input("What symptoms are you experiencing? (Example: headache, dizziness)")
-    if st.button("Start Diagnosis") and symptoms:
+    st.session_state.max_qs = 6
+    st.info("👋 Hi there! Let's get started with your symptoms.")
+    symptoms = st.text_input("🤒 What symptoms are you experiencing? (e.g., headache, dizziness)")
+    if st.button("Start Diagnosis", use_container_width=True) and symptoms:
         st.session_state.qa_pairs.append("What symptoms are you experiencing?")
         st.session_state.qa_pairs.append(symptoms)
         st.session_state.valid_answers.append(symptoms)
@@ -130,21 +130,18 @@ elif st.session_state.step <= st.session_state.max_qs:
         question = get_next_question(st.session_state.qa_pairs)
         st.session_state.qa_pairs.append(question)
 
-    st.subheader(f"Question {st.session_state.step}:")
-    st.write(st.session_state.qa_pairs[-1])
-    answer = st.text_input(f"Your answer to question {st.session_state.step}:")
+    st.subheader(f"📝 Question {st.session_state.step}:")
+    st.markdown(f"<div style='background-color:#eef2fa; padding: 10px; border-radius: 10px;'>{st.session_state.qa_pairs[-1]}</div>", unsafe_allow_html=True)
+    answer = st.text_input("✍️ Your answer:")
 
-    if st.button("Next") and answer:
+    if st.button("Next", use_container_width=True) and answer:
         st.session_state.qa_pairs.append(answer)
-
-        # Only keep answers that are not clear negatives
         if not any(neg in answer.lower() for neg in ["no", "not sure", "don't have"]):
             st.session_state.valid_answers.append(answer)
-
         st.session_state.step += 1
 
 else:
-    st.success("✅ The questions are complete. Analyzing your health status now...")
+    st.success("✅ All questions answered. Analyzing your health status...")
     input_data = [" ".join(st.session_state.valid_answers)]
 
     all_predictions = []
@@ -174,17 +171,17 @@ else:
                     st.error(f"Encoder not found for model {key}")
 
             except Exception as e:
-                st.error(f"An error occurred during prediction with model {key}: {str(e)}")
+                st.error(f"❌ Error during prediction with model {key}: {str(e)}")
 
     if all_predictions:
         prediction_count = Counter(all_predictions)
         most_common_prediction, _ = prediction_count.most_common(1)[0]
-        st.subheader(f"🔍 Predicted Disease: {most_common_prediction}")
-        st.info("💡 Temporary advice: Please rest and drink plenty of fluids until you visit a doctor.")
+        st.subheader(f"🔍 Most Likely Condition: **{most_common_prediction}**")
+        st.info("💡 Temporary advice: Please rest and drink plenty of fluids. Seek medical attention if necessary.")
     else:
-        st.error("No predictions were made from any model.")
+        st.error("⚠️ No predictions could be made from the available models.")
 
-    if st.button("Restart"):
+    if st.button("🔄 Restart", use_container_width=True):
         for key in list(st.session_state.keys()):
             del st.session_state[key]
         st.rerun()
