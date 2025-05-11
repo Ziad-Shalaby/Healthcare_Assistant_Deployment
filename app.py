@@ -208,7 +208,7 @@ if st.session_state.step == 0:
         st.session_state.qa_pairs.append(symptoms)
         st.session_state.valid_answers.append(symptoms)
         st.session_state.step += 1
-        st.experimental_rerun()  # Refresh to reflect the change
+        st.experimental_rerun()
 
 elif st.session_state.step <= st.session_state.max_qs:
     if len(st.session_state.qa_pairs) % 2 == 0:
@@ -224,7 +224,7 @@ elif st.session_state.step <= st.session_state.max_qs:
         if not any(neg in answer.lower() for neg in ["no", "not sure", "don't have"]):
             st.session_state.valid_answers.append(answer)
         st.session_state.step += 1
-        st.experimental_rerun()  # Refresh to reflect the change
+        st.experimental_rerun()
 
 else:
     st.success("✅ The questions are complete. Analyzing your health status now...")
@@ -263,13 +263,15 @@ else:
         prediction_count = Counter(all_predictions)
         most_common_prediction, _ = prediction_count.most_common(1)[0]
         st.subheader(f"🔍 Predicted Disease: {most_common_prediction}")
-        st.info("💡 Temporary advice: Please rest and drink plenty of fluids until you visit a doctor.")
 
-        # Specialist report
+        # Specialist recommendation
         user_symptom_text = " ".join(st.session_state.valid_answers)
         recommendation = get_specialist_recommendation(user_symptom_text)
         st.subheader("🩺 Specialist Recommendation:")
         st.write(recommendation)
+
+        # Show temporary advice LAST
+        st.info("💡 Temporary advice: Please rest and drink plenty of fluids until you visit a doctor.")
 
     else:
         st.error("No predictions were made from any model.")
