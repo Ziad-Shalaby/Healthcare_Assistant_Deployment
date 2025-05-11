@@ -73,7 +73,7 @@ def load_tokenizer(path):
 model_paths = {
     '1a': 'machine_learning_models/1-log_reg_model.pkl',
     '1b': 'machine_learning_models/1-mlp_model.pkl',
-    '1c': '1-lstm_model.pkl',
+    '1c': 'deep_learning_models/1-lstm_model.pkl',
     '2a': 'machine_learning_models/2-logistic_model.pkl',
     '2b': 'machine_learning_models/2-mlp_model.pkl',
     '3a': 'machine_learning_models/3-log_reg_model.pkl',
