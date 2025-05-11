@@ -9,35 +9,55 @@ from tensorflow.keras.preprocessing.sequence import pad_sequences
 from streamlit.components.v1 import html
 st.set_page_config(page_title="AI Healthcare Assistant", layout="centered")
 
-# ===== Custom CSS for background =====
+# ===== Custom CSS for dark theme =====
 st.markdown(
     """
     <style>
     .stApp {
-        background-color: #f3e8ff; /* خلفية بنفسجي فاتح */
+        background-color: #121212;
+        color: #f0f0f0;
     }
 
     h1, h2, h3, h4, h5, h6, p, label, div, span {
-        color: #2e1065 !important; /* لون النص */
+        color: #e0e0e0 !important;
+    }
+
+    .stTextInput>div>div>input {
+        background-color: #1f1f1f !important;
+        border: 1px solid #333 !important;
+        color: #ffffff !important;
     }
 
     [data-testid="stButton"] button {
-        background-color: #e9d5ff !important; /* بنفسجي فاتح */
-        color: #4c1d95 !important;
-        border: none;
+        background-color: #3f51b5 !important;
+        color: #ffffff !important;
         border-radius: 8px;
         font-weight: bold;
+        border: none;
     }
 
     [data-testid="stButton"] button:hover {
-        background-color: #d8b4fe !important; /* hover أغمق شوية */
-        color: #3b0764 !important;
+        background-color: #5c6bc0 !important;
+        color: #ffffff !important;
     }
 
-    [data-testid="stTextInput"] {
-        background-color: #fff0f6 !important;
-        border: 1px solid #d63384 !important;
-        color: #2e1065 !important;
+    .stTextInput label {
+        color: #ffffff !important;
+    }
+
+    .stSubheader, .stMarkdown, .stText {
+        color: #e0e0e0 !important;
+    }
+
+    .stSuccess, .stError, .stInfo {
+        background-color: #2c2c2c !important;
+        color: #e0e0e0 !important;
+        border-radius: 10px;
+        padding: 1rem;
+    }
+
+    .css-1n76uvr {
+        background-color: transparent !important;
     }
     </style>
     """,
