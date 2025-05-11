@@ -13,7 +13,6 @@ An AI-powered Streamlit application that simulates a healthcare assistant by ask
 3. [Installation](#installation)
 4. [Usage](#usage)
 5. [Features](#features)
-6. [Contributing](#contributing)
 
 ---
 
