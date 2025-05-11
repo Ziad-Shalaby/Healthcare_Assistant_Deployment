@@ -5,6 +5,9 @@ import numpy as np
 from collections import Counter
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 
+# ====== Set Page Config ======
+st.set_page_config(page_title="AI Healthcare Assistant", page_icon="🧠", layout="centered")
+
 # ====== Load Models, Encoders, Tokenizers ======
 @st.cache_resource
 def load_model(path):
@@ -104,7 +107,6 @@ Next question:
         return f"⚠️ Error getting question: {str(e)}\n{response.text if response else ''}"
 
 # ====== Streamlit UI ======
-st.set_page_config(page_title="AI Healthcare Assistant", page_icon="🧠", layout="centered")
 st.markdown("<h1 style='text-align: center; color: #0e5ec7;'>🧠 AI Healthcare Assistant</h1>", unsafe_allow_html=True)
 st.markdown("<h4 style='text-align: center; color: #444;'>Answer a few questions and get a prediction of your condition.</h4>", unsafe_allow_html=True)
 st.markdown("---")
