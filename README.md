@@ -124,9 +124,8 @@ streamlit run app.py
 Distributed under the MIT License. See `LICENSE` for more information.
 
 ## Contact
-- Ziad Shalaby - [GitHub](https://github.com/Ziad-Shalaby)
-- Adham Nabih - [GitHub](https://github.com/ADHAM2nabih)
-
+- Ziad Shalaby - ![LinkedIn](https://img.shields.io/badge/LinkedIn-blue?logo=linkedin)](https://www.linkedin.com/in/ziad-shalaby1/) [![GitHub](https://img.shields.io/badge/GitHub-black?logo=github)](https://github.com/Ziad-Shalaby)
+- Adham Nabih - [![LinkedIn](https://img.shields.io/badge/LinkedIn-blue?logo=linkedin)](https://www.linkedin.com/in/adham-nabih/) [![GitHub](https://img.shields.io/badge/GitHub-black?logo=github)](https://github.com/ADHAM2nabih)
 ---
 
 > 💡 **Disclaimer**: This AI-assisted tool is for educational purposes and should not replace professional medical advice. Always consult healthcare professionals for accurate diagnosis and treatment.
